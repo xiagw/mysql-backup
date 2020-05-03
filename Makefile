@@ -13,16 +13,16 @@ push: build
 	docker tag $(BUILDIMAGE) $(TARGET)
 	docker push $(TARGET)
 
-test_dump:
-	cd test && DEBUG=$(DEBUG) ./test_dump.sh
+integration_test:
+	go test ./test --tags=integration -v
 
-test_cron:
-	cd test && ./test_cron.sh
+integration_test_debug:
+	dlv --wd=./test test ./test --tags=integration
 
-test_source_target:
-	cd test && ./test_source_target.sh
+test: unit_test integration_test
 
-test: test_dump test_cron test_source_target
+unit_test:
+	go test ./...
 
 .PHONY: clean-test-stop clean-test-remove clean-test
 clean-test-stop:
@@ -36,15 +36,5 @@ clean-test-remove:
 	$(eval IDS:=$(shell docker ps -a --filter label=mysqltest -q))
 	@if [ -n "$(IDS)" ]; then docker rm $(IDS); fi
 	@echo
-	@echo Remove Volumes
-	$(eval IDS:=$(shell docker volume ls --filter label=mysqltest -q))
-	@if [ -n "$(IDS)" ]; then docker volume rm $(IDS); fi
-	@echo
 
-clean-test-network:
-	@echo Remove Networks
-	$(eval IDS:=$(shell docker network ls --filter label=mysqltest -q))
-	@if [ -n "$(IDS)" ]; then docker network rm $(IDS); fi
-	@echo
-
-clean-test: clean-test-stop clean-test-remove clean-test-network
+clean-test: clean-test-stop clean-test-remove
