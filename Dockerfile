@@ -12,4 +12,7 @@ COPY ./root/ /
 USER appuser
 
 # start
-ENTRYPOINT ["/run.sh"]
+# ENTRYPOINT ["/run.sh"]
+
+ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
+CMD [ "/bak.sh" ]

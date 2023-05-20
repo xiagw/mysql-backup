@@ -6,9 +6,12 @@ if [ "${CHANGE_SOURCE}" = true ] || [ "${IN_CHINA}" = true ]; then
     sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/' /etc/apk/repositories
 fi
 
+# curl ca-certificates && rm -rf /var/cache/apk/*
+
 # install the necessary client
 # the mysql-client must be 10.3.15 or later
-apk add --no-cache --update 'mariadb-client>10.3.15' \
+apk update
+apk add --no-cache --update 'mariadb-client>10.3.15'  dumb-init \
     mariadb-connector-c bash python3 py3-pip samba-client shadow openssl coreutils
 rm -rf /var/cache/apk/*
 touch /etc/samba/smb.conf
