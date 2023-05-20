@@ -13,5 +13,6 @@ _kill() {
 trap _kill HUP INT PIPE QUIT TERM
 
 /bak.sh &
+pids="$pids $!"
 
 while true; do sleep 5; done
