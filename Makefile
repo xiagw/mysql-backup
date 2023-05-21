@@ -2,12 +2,13 @@
 
 TAG ?= $(shell git log -n 1 --pretty=format:"%H")
 IMAGE ?= databack/mysql-backup
-BUILDIMAGE ?= $(IMAGE):build
+BUILDIMAGE ?= $(IMAGE):latest
 TARGET ?= $(IMAGE):$(TAG)
 ARCH ?= linux/amd64,linux/arm64
 
 build:
-	docker buildx build -t $(BUILDIMAGE) --platform $(ARCH)  .
+# docker buildx build -t $(BUILDIMAGE) --platform $(ARCH)  .
+	docker build -t $(BUILDIMAGE)  .
 
 push: build
 	docker tag $(BUILDIMAGE) $(TARGET)
