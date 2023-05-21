@@ -2,7 +2,7 @@
 FROM alpine:3.18
 
 # If you're in China, set IN_CHINA to true.
-ARG IN_CHINA=false
+ARG IN_CHINA=true
 
 COPY ./root/build.sh /
 RUN sh /build.sh
@@ -15,4 +15,4 @@ USER appuser
 # ENTRYPOINT ["/run.sh"]
 
 ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
-CMD [ "/bak.sh" ]
+CMD [ "/run.sh" ]
