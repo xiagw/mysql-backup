@@ -23,7 +23,7 @@ if [ "${CHANGE_SOURCE}" = true ] || [ "${IN_CHINA}" = true ]; then
     python3 -m pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple pip -U
     python3 -m pip config set global.extra-index-url "https://mirrors.ustc.edu.cn/pypi/web/simple https://pypi.tuna.tsinghua.edu.cn/simple"
 fi
-python3 -m pip install --no-cache-dir awscli
+python3 -m pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple --no-cache-dir awscli
 
 # set us up to run as non-root user
 groupadd -g 1000 appuser
